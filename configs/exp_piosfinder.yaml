@@ -1,0 +1,20 @@
+# Here's where you define experiment-specific hyperparameters.
+# You can also create lists and group parameters together into nested sub-parts.
+# In Python, this is all read as a dict.
+
+# environment/computational parameters
+seed: 32678456782       # random number generator seed (long integer value)
+device: cuda
+num_workers: 4
+
+# dataset parameters
+data_root: '/mnt/c/Users/rache/Dropbox/Doctoral_projects/Projects/Piospheres/Final Images/dataset_COCO'
+anno_root: '/mnt/c/Users/rache/Dropbox/Doctoral_projects/Projects/Piospheres/Final Images/dataset_COCO/labels'
+num_classes: 2
+
+# training hyperparameters
+image_size: [256, 256]
+num_epochs: 200
+batch_size: 32
+learning_rate: 0.00001
+weight_decay: 0.1
