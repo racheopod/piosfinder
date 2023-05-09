@@ -28,12 +28,12 @@ from model import ResNet, ResidualBlock
 
 
 
-def create_dataloader(cfg, split='train'):
+def create_dataloader(cfg, split='train', transform=None):
     '''
         Loads a dataset according to the provided split and wraps it in a
         PyTorch DataLoader object.
     '''
-    dataset_instance = NAIPDataset(cfg, split)        # create an object instance of NAIPDataset class
+    dataset_instance = NAIPDataset(cfg, split, transform)        # create an object instance of NAIPDataset class
 
     dataLoader = DataLoader(
             dataset=dataset_instance,
@@ -188,7 +188,7 @@ def validate(cfg, dataLoader, model):
     # iterate over dataLoader
     progressBar = trange(len(dataLoader))
     
-    with torch.no_grad():               # don't calculate intermediate gradient steps: we don't need them, so this saves memory and is faster
+    with torch.no_grad():               
         for idx, (data, labels) in enumerate(dataLoader):
 
             # put data and labels on device
@@ -246,8 +246,8 @@ def main():
         cfg['device'] = 'cpu'
 
     # initialize data loaders for training and validation set
-    dl_train = create_dataloader(cfg, split='train')
-    dl_val = create_dataloader(cfg, split='val')
+    dl_train = create_dataloader(cfg, split='train', transform=True)
+    dl_val = create_dataloader(cfg, split='val', transform=False)
 
     # initialize model
     model, current_epoch = load_model(cfg)

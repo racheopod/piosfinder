@@ -1,10 +1,8 @@
-# Here's where you define experiment-specific hyperparameters.
-# You can also create lists and group parameters together into nested sub-parts.
-# In Python, this is all read as a dict.
+# Experiment-specific hyperparameters
 
 # environment/computational parameters
-seed: 32678456782       # random number generator seed (long integer value)
-device: cuda
+seed: 32678456782
+device: cpu
 num_workers: 4
 
 # dataset parameters

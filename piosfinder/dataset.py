@@ -1,12 +1,18 @@
 '''
    Set up our NAIP dataset. These data are from National Agricultural Imagery Program 2019 
+   National Agriculture Imagery Program (NAIP) Digital Object Identifier (DOI) number: /10.5066/F7QN651G
+   
    Bands are NIR, G, B
-   Images are 256x256, hand-labeled using Google Earth Imagery
-   Images extracted from quarter-quad images on Google Earth Engine for positive labels and 
-   for a random subset of images across Wyoming.
 
-    Adapted from:
-    classifier code from Benjamin Kellenberger from CV4Ecology 2022,
+   Resolution: 60 cm
+   
+   Images are 256x256, hand-labeled using Google Earth Imagery (~156.3 m ground resolution)
+   
+   Images extracted from quarter-quad images on Google Earth Engine for positive labels and 
+   for a random subset of images across Wyoming for negative labels.
+
+   Adapted from:
+   Classifier code from Benjamin Kellenberger from CV4Ecology 2022
 '''
 
 import os
@@ -14,6 +20,7 @@ import json
 from torch.utils.data import Dataset
 from torchvision.transforms import Compose, Resize, ToTensor
 from PIL import Image
+import torchvision.transforms as T
 
 
 class NAIPDataset(Dataset):
@@ -23,26 +30,41 @@ class NAIPDataset(Dataset):
         'Piosphere': 1
     }
 
-    def __init__(self, cfg, split='train'):
+    def __init__(self, cfg, split='train', transform=None):
         '''
-            Constructor. Here, we collect and index the dataset inputs and
-            labels.
+            Constructor. Here, we collect and index the dataset inputs and labels.
         '''
         self.data_root = cfg['data_root']
         self.anno_root = cfg['anno_root']
         self.split = split
-        self.transform = Compose([        # Note: could include transformations here
-            Resize((cfg['image_size'])),  # Resize is stand-in but shouldn't be necessary given all images are same size     
-            ToTensor()                          
+        
+        self.transform = transform
+
+        # Define data augmentations
+        self.torchtransform = T.Compose([
+            T.RandomHorizontalFlip(p=0.5), # Keep defaults of p = 0.5 of each transformation
+            T.RandomVerticalFlip(p=0.5), # Horizontal and/or vertical flips
+            T.ColorJitter(brightness=(0.95,1.5),contrast=0.01,hue=(-0.01,0.01)), # To mimic washed-out images and different seasons with different vegetation growth
+            ToTensor()
         ])
+
+        self.notransform = Compose([ToTensor()])
         
         # index data into list
         self.data = []
 
+        # Get name of annotation file
+        if self.split == 'train':
+            self.annfile = 'train_annotations.json'
+        elif self.split == 'val':
+            self.annfile = 'val_annotations.json'
+        elif self.split == 'test':
+            self.annfile == 'test_annotations.json'
+
         # load annotation file
         annoPath = os.path.join(
             self.anno_root,
-            'train'+'_annotations.json' if self.split=='train' else 'val'+'_annotations.json'
+            self.annfile
         )
 
         meta = json.load(open(annoPath, 'r'))
@@ -95,12 +117,15 @@ class NAIPDataset(Dataset):
             Here's where we actually load the image.
         '''
         image_name, label = self.data[idx]              # see lines above where we added these two items to the self.data list
-
+        
         # load image
-        image_path = os.path.join(self.data_root, 'train' if self.split=='train' else 'val', image_name)
+        image_path = os.path.join(self.data_root, self.split, image_name)
         img = Image.open(image_path)#.convert('RGB')     # all images are the same, shouldn't need to convert.
 
         # transform: see lines 31ff above where we define our transformations
-        img_tensor = self.transform(img)
+        if self.transform:
+            img_tensor = self.torchtransform(img)
+        else:
+            img_tensor = self.notransform(img)
 
         return img_tensor, label
