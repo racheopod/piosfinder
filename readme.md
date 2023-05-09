@@ -47,4 +47,4 @@ The National Agricultural Imagery Program ([NAIP](https://www.usgs.gov/centers/e
 
 [4] U.S. Geological Survey, 2016. USGS National Hydrography Dataset (NHD) Downloadable Data Collection - National Geospatial Data Asset (NGDA) National Hydrography Dataset (NHD): USGS - National Geospatial Technical Operations Center (NGTOC): Rolla, MO and Denver, CO, http://nhd.usgs.gov, http://viewer.nationalmap.gov/.
 
-[5] U.S. Department of Agriculture (2019). National Agriculture Imagery Program (NAIP). https://doi.org/10.5066/F7QN651G
+[5] U.S. Department of Agriculture (2019). National Agriculture Imagery Program (NAIP). https://doi.org/10.5066/F7QN651G 
