@@ -58,8 +58,6 @@ class NAIPDataset(Dataset):
             self.annfile = 'train_annotations.json'
         elif self.split == 'val':
             self.annfile = 'val_annotations.json'
-        elif self.split == 'test':
-            self.annfile == 'test_annotations.json'
 
         # load annotation file
         annoPath = os.path.join(
