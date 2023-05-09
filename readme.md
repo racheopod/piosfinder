@@ -1,4 +1,4 @@
-# Finding piospheres (livestock concentration areas) in NAIP imagery
+# Finding piospheres in NAIP imagery
 
 *This project began in 2022 at Caltech's [Computer Vision for Ecology Summer Workshop](https://cv4ecology.caltech.edu/).*
 
@@ -6,7 +6,7 @@
 
 ## Background
 
-Identifying patterns of livestock use and gradients of disturbance is a key component to understanding the dynamics of dryland plant communities and potential impacts of climate change on these ecosystems. Livestock can effect changes in plant communities through preferential use of certain plant types (e.g., cattle eat grass and avoid shrubs) [1]. The location of water sources dictates the distribution and concentration of animals, leading to heterogeneous use across the landscape. Gradients of grazing intensity and disturbance form around water sources, with the greatest (and most visible) impacts close to the source, termed the “piosphere” [2] (Fig. 1). This phenomenon is well documented and ranching practices draw upon a suite of attractants (such as salt-blocks and artificial water sources) to achieve more even use of forage and to ameliorate concentrated use of wetland and riparian areas [3].
+Identifying patterns of livestock use and gradients of disturbance is a key component to understanding the dynamics of dryland plant communities and potential impacts of climate change on these ecosystems. Livestock can effect changes in plant communities through preferential use of certain plant types (e.g., cattle eat grass and avoid shrubs) [1]. The location of water sources dictates the distribution and concentration of animals, leading to heterogeneous use across the landscape. Gradients of grazing intensity and disturbance form around water sources, with the greatest (and most visible) impacts close to the source, termed the “piosphere” [2]. This phenomenon is well documented and ranching practices draw upon a suite of attractants (such as salt-blocks and artificial water sources) to achieve more even use of forage and to ameliorate concentrated use of wetland and riparian areas [3].
 
 <img src="figures/FourPiospheres.png" alt="piospheres" width="500" height="300" title="Piospheres in the western United States.">
 
